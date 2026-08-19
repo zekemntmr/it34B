@@ -5,7 +5,7 @@
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'Unkknown';
 
             // String to Array 
-            if(strpos($,',') !==false){
+            if(strpos($ip,',') !==false){
                 $ip = trim(explode(',', $ip )[0]);
             }
 
