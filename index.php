@@ -27,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <button
             type="submit"
             name="action"
-        >Sample</button>
+        >Pogi Button</button>
     
 </body>
 </html>
