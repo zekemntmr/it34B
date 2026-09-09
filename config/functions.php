@@ -25,9 +25,9 @@ function loginUser($pdo, $login, $password)
 
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execite([':login' => $login]);
+    $stmt->execute([':login' => $login]);
 
-    $user = stmt->fetch();
+    $user = $stmt->fetch();
 
     if(!$user) {
         return false;
@@ -42,6 +42,7 @@ function loginUser($pdo, $login, $password)
     $_SESSION['user_email'] = $user['user_email'];
     $_SESSION['user_username'] = $user['user_username'];
     $_SESSION['user_role'] = $user['user_role'];
+
 
     return true;
 
