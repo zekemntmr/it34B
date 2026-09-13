@@ -1,8 +1,9 @@
 <?php
 require_once('./config/config.php');
 
-$user_id = 'username' ?? null;
-$user_email = 'password' ?? null;
+$user_id = "root" ?? null;
+$user_email = 'username' ?? null;
+$user_password = 'password' ?? null;
 
 $success = logActivity($pdo, $user_id, $user_email, 'test_activity','success');
 

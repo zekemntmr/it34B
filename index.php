@@ -33,13 +33,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <body>
     
 <form method="POST">
-    <label>Username or Email</label>
+    <label>Username or Email: </label>
     <input type="text"
             name="login"
             required>
     <br>
     <br>
-    <label>Password</label>
+    <label>Password: </label>
     <input type="password"
             name="password"
             required>
