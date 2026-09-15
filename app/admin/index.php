@@ -33,15 +33,24 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Welcome, Admin</h1>
     <a href="../../auth/signout.php">Sign Out</a>
+    <div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    
+    
+
+    <div class="table-responsive">
+        <table class="table table-striped-columns">
 
 
-    <table border="1">
+    
         <thead>
-            <tr>
+            <tr class="table-active">
                 <th>Record ID</th>
                 <th>User ID</th>
                 <th>User Email</th>
@@ -68,5 +77,6 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
         </tbody>
     </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
