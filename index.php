@@ -13,27 +13,45 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $login = trim($_POST['login'] ?? '' );
     $password = $_POST['password'] ?? '';
 
-
     
-    if(loginUser($pdo,$login,$password)){
-        header('Location:' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-
-    }
 
     $error = 'Invalid Login Credentials';
 
     if ($login=== '' || $password ===''){
+
         // Log Incomplete
         logActivity($pdo,null,$login,'login','failed');
+
     }else{
 
-        if(loginUser($pdo,$login,$password)){
-            logActivity($pdo,$_SESSION['user_id'], $_SESSION['user_email'],'login','success');
-            header('Location:' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-        }
+    $result = loginUser($pdo,$login,$password);
+
+    if($result===true){
+        logActivity(
+            $pdo,$_SESSION['user_id'],
+            $_SESSION['user_email'],
+            'login',
+            'success'
+        );
+        
+        header('Location:' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
+        exit;
+
+
+
+    }elseif($result=== 'active_session'){
+        echo 'This Account is already logged in on another device';
+        $error = 'This Account is already logged in on another device';
+        
+
+    }else{
+
+        $error = 'Invalid login credentials';
+    }
     }
 
 }
+
 
 ?>
 
