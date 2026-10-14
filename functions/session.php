@@ -29,18 +29,20 @@ function startUserSession($pdo)
         'user_id' => $user_id
     ]);
 
-    return $pdo->lastInsertId();
+    $_SESSION['sessions_id'] = $pdo->lastInsertId();
+
+    return $_SESSION['sessions_id'];
 }
 
 // End User session
 
 
 function endUserSession($pdo){
-    if(!isset($_SESSION['session_id'])){
+    if(!isset($_SESSION['sessions_id'])){
         return false;
     }
 
-    $session_id = $_SESSION['session_id'];
+    $session_id = $_SESSION['sessions_id'];
 
     $stmt = $pdo->prepare("
         UPDATE user_sessions
@@ -51,17 +53,17 @@ function endUserSession($pdo){
                 session_start,
                 NOW()
             )
-        WHERE session_id = :session_id
+        WHERE sessions_id = :sessions_id
     ");
     return $stmt -> execute ([
-        'session_id'=> $session_id
+        'sessions_id'=> $session_id
     ]);
 }
 
 // Check if user is already logged in
 function hasActiveUserSession($pdo,$user_id){
     $stmt= $pdo->prepare("
-        SELECT session_id
+        SELECT sessions_id
         FROM user_sessions
         WHERE user_id = :user_id
         AND session_end IS NULL
@@ -82,7 +84,7 @@ global $pdo;
  //Time out variable
 // 10 seconds for testing
 // 1800s = 30mins
-$timeout = 10;
+$timeout = 1000;
 
 
 if (isset($_SESSION['last_activity'])){
@@ -92,7 +94,12 @@ $inactive_time = time() - $_SESSION['last_activity'];
 
 if ($inactive_time > $timeout) {
    
-    logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'],'session_timeout','success');
+    logActivity(
+        $pdo,$_SESSION['user_id'],
+        $_SESSION['user_email'] ?? null,
+        'session_timeout',
+        'success'
+        );
 
 }  
 
@@ -109,6 +116,7 @@ session_destroy();
 //Redirect 
 
 header('Location:' . BASE_URL . '/index.php?timeout=1');
+exit;
 
 
 
